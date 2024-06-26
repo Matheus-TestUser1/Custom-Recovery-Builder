@@ -121,7 +121,7 @@ jobs:
         git clone ${{ github.event.inputs.DEVICE_TREE }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
         cd ${{ github.event.inputs.DEVICE_PATH }}
         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
-
+       export ALLOW_MISSING_DEPENDENCIES=true && . build/envsetup.sh
     - name: Check Build Makefile
       run: |
         cd android-recovery
@@ -137,7 +137,7 @@ jobs:
     - name: Install Python 2
       if: github.event.inputs.MANIFEST_BRANCH != 'twrp-11' && github.event.inputs.MANIFEST_BRANCH != 'twrp-12.1'
       run: |
-        sudo apt -y install python2
+        sudo apt -y install python2 python-is-python3
         cd /usr/bin
         sudo ln -sf python2 python
 
